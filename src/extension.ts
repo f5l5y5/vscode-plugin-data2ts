@@ -1,26 +1,75 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+import * as fs from 'fs'
 import * as vscode from 'vscode';
+import {Project} from 'ts-morph'
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "data2ts" is now active!');
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('data2ts.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from data2ts!');
+	let disposable = vscode.commands.registerCommand('data2ts.helloWorld', async() => {
+		try {
+			// get active editor and selection
+			const editor = vscode.window.activeTextEditor;
+			if (!editor) {
+			  vscode.window.showErrorMessage('No open text editor');
+			  return;
+			}
+			const document = editor.document;
+			const selection = editor.selection;
+			const selectedText = document.getText(selection);
+	  
+			let varName = '';
+			let isObjSelected = false;
+			let objCode = '';
+	  
+			// determine if object or variable name was selected
+			if (!selectedText) {
+			  const position = selection.active;
+			  const wordRange = document.getWordRangeAtPosition(position);
+			  varName = document.getText(wordRange);
+			  isObjSelected = true;
+			} else {
+			  objCode = selectedText;
+			}
+	  
+			// parse the JS object and generate ts declaration file
+			let typeName = 'any';
+			try {
+			  const obj = eval(`(${objCode})`);
+			  if (typeof obj === 'object') {
+				typeName = '{\n';
+				for (const key in obj) {
+				  if (Object.prototype.hasOwnProperty.call(obj, key)) {
+					const value = obj[key];
+					const valueType = typeof value;
+					if (valueType === 'string') {
+					  typeName += `  '${key}': string;\n`;
+					} else if (valueType === 'number') {
+					  typeName += `  '${key}': number;\n`;
+					} else if (valueType === 'boolean') {
+					  typeName += `  '${key}': boolean;\n`;
+					}
+				  }
+				}
+				typeName += '}';
+			  }
+			} catch (error) {
+			  vscode.window.showErrorMessage(`Error: ${error}`);
+			  return;
+			}
+	  
+			const code = `declare const ${varName}:${typeName};\n\n`;
+	  
+			// find the previous empty line and insert the declaration
+			const startPos = new vscode.Position(Math.max(selection.start.line - 1, 0), 0);
+			const newText = code;
+	  
+			await editor.edit(editBuilder => {
+			  editBuilder.insert(startPos, newText);
+			});
+		  } catch (error) {
+			vscode.window.showErrorMessage(`Error: ${error}`);
+		  }
 	});
 
 	context.subscriptions.push(disposable);
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
