@@ -1,73 +1,57 @@
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
+import { getFunctionCode } from "./utils";
 
 export function activate(context: vscode.ExtensionContext) {
+  let disposable = vscode.commands.registerCommand(
+    "delfunc.del",
+    async () => {
+      try {
+        // get active editor and selection 获取当前文件 如果没有打开文件，报错
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+          vscode.window.showErrorMessage("No open text editor");
+          return;
+        }
 
-	let disposable = vscode.commands.registerCommand('data2ts.helloWorld', async () => {
-		try {
-			// get active editor and selection 获取当前文件 如果没有打开文件，报错
-			const editor = vscode.window.activeTextEditor;
-			if (!editor) {
-				vscode.window.showErrorMessage('No open text editor');
-				return;
-			}
-			// 获取到选中的文本 
-			const document = editor.document;
-			const selection = editor.selection;
-			const selectedText = document.getText(selection);
+		const code = editor.document.getText()
+		const index = editor.document.offsetAt(editor.selection.active)
 
-			let varName = 'Txx';
-			// let isObjSelected = false;
-			// let objCode = '';
+        let functionNode = getFunctionCode(code, index);
 
-			// 判断选中的文本是否是一个变量
-			// if(selectedText){
-			// 	const position = selection.active;
-			// 	const wordRange = document.getWordRangeAtPosition(position);
-			// 	varName = document.getText(wordRange)
-			// 	const varLine = document.lineAt(wordRange.start.line).text;
-			// 	const varMatch = varLine.match(new RegExp(`\\b(let|const)\\s+${varName}\\b`));
-			// }
+        if (!functionNode) {
+          return;
+        }
 
-			// 判断类型
-			function getType(val: any): string {
-				const typeStr = Object.prototype.toString.call(val);
-				return typeStr.slice(8, -1).toLowerCase();
-			}
+        /** 删除前开始到结束  行列 */
+        editor?.edit((editorBuilder) => {
+          editorBuilder.delete(
+            new vscode.Range(
+              new vscode.Position(
+                functionNode!.start.line - 1,
+                functionNode!.start.column
+              ),
+              new vscode.Position(
+                functionNode!.end.line,
+                functionNode!.end.column
+              )
+            )
+          );
+        });
 
-			// parse the JS object and generate ts declaration file
-			// const isTypeOrInterface = 'type'
-			let typeName = 'any';
-			try {
-				const obj = eval(`(${selectedText})`);
-				if (typeof obj === 'object') {
-					typeName = '{\n';
-					for (const key in obj) {
-						if (Object.prototype.hasOwnProperty.call(obj, key)) {
-							// 判断不是object或者是array
-							typeName += `  ${key}: ${getType(obj[key])}\n`;
-						}
-					}
-					typeName += '}';
-				}
-			} catch (error) {
-				vscode.window.showErrorMessage(`Error: ${error}`);
-				return;
-			}
+        // 如果打开了文件，获取所有的文本内容
+        // const document = editor.document;
+        // const selection = editor.selection;
+        // // 选择操作
+        // const selectedText = document.getText(selection); // 获取选择的文本内容
+        // const obj = eval(`(${selectedText})`);
+        // // 未选择操作
+        // const index = document.offsetAt(editor.selection.active)// 当前光标所在位置
+        // const allText = document.getText()
+      } catch (error) {
+        vscode.window.showErrorMessage(`Error: ${error}`);
+      }
+    }
+  );
 
-			const code = `type ${varName} = ${typeName}\n\n`;
-
-			// find the previous empty line and insert the declaration
-			const startPos = new vscode.Position(Math.max(selection.start.line - 1, 0), 0);
-			const newText = code;
-
-			await editor.edit(editBuilder => {
-				editBuilder.insert(startPos, newText);
-			});
-		} catch (error) {
-			vscode.window.showErrorMessage(`Error: ${error}`);
-		}
-	});
-
-	context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable);
 }
-

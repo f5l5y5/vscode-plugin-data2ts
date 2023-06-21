@@ -1,7 +1,8 @@
 {
-  "name": "data2ts",
-  "displayName": "data2ts",
-  "description": "a simple tool for data2ts",
+  "name": "delfunc",
+  "displayName": "delfunc",
+  "description": "a simple tool for delfunc",
+  "publisher": "fuye",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.79.0"
@@ -10,14 +11,21 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:data2ts.helloWorld"
+    "onCommand:delfunc.del"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "data2ts.helloWorld",
-        "title": "Hello World"
+        "command": "delfunc.del",
+        "title": "yyds"
+      }
+    ],
+    "keybindings":[
+      {
+        "command": "delete function",
+        "key": "ctrl+alt+d",
+        "mac": "cmd+alt+d"
       }
     ]
   },
@@ -27,19 +35,25 @@
     "watch": "tsc -watch -p ./",
     "pretest": "pnpm run compile && pnpm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "vitest --run"
   },
   "devDependencies": {
-    "@types/vscode": "^1.79.0",
+    "@babel/generator": "^7.22.5",
+    "@babel/parser": "^7.22.5",
+    "@babel/traverse": "^7.22.5",
+    "@types/babel__generator": "^7.6.4",
+    "@types/babel__traverse": "^7.20.1",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.79.0",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
     "eslint": "^8.28.0",
     "glob": "^8.0.3",
     "mocha": "^10.1.0",
     "typescript": "^4.9.3",
-    "@vscode/test-electron": "^2.2.0"
+    "vitest": "^0.32.2"
   }
 }
