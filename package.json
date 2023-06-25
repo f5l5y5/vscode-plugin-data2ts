@@ -1,59 +1,62 @@
 {
-  "name": "delfunc",
-  "displayName": "delfunc",
-  "description": "a simple tool for delfunc",
-  "publisher": "fuye",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.79.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:delfunc.del"
-  ],
-  "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "delfunc.del",
-        "title": "yyds"
-      }
-    ],
-    "keybindings":[
-      {
-        "command": "delete function",
-        "key": "ctrl+alt+d",
-        "mac": "cmd+alt+d"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "pnpm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "pnpm run compile && pnpm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vitest --run"
-  },
-  "devDependencies": {
-    "@babel/generator": "^7.22.5",
-    "@babel/parser": "^7.22.5",
-    "@babel/traverse": "^7.22.5",
-    "@types/babel__generator": "^7.6.4",
-    "@types/babel__traverse": "^7.20.1",
-    "@types/glob": "^8.0.0",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "16.x",
-    "@types/vscode": "^1.79.0",
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
-    "@vscode/test-electron": "^2.2.0",
-    "eslint": "^8.28.0",
-    "glob": "^8.0.3",
-    "mocha": "^10.1.0",
-    "typescript": "^4.9.3",
-    "vitest": "^0.32.2"
-  }
+	"name": "data2ts",
+	"displayName": "data2ts",
+	"description": "a simple tool for data2ts",
+	"publisher": "fuye",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.79.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:data2ts.type"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "data2ts.type",
+				"title": "data2ts"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "data2ts.type",
+				"key": "ctrl+alt+space",
+				"mac": "cmd+alt+space"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "pnpm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "pnpm run compile && pnpm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "vitest --run"
+	},
+	"devDependencies": {
+		"@babel/generator": "^7.22.5",
+		"@babel/parser": "^7.22.5",
+		"@babel/traverse": "^7.22.5",
+		"@types/babel__generator": "^7.6.4",
+		"@types/babel__traverse": "^7.20.1",
+		"@types/glob": "^8.0.0",
+		"@types/mocha": "^10.0.1",
+		"@types/node": "16.x",
+		"@types/vscode": "^1.79.0",
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
+		"@vscode/test-electron": "^2.2.0",
+		"eslint": "^8.28.0",
+		"glob": "^8.0.3",
+		"mocha": "^10.1.0",
+		"typescript": "^4.9.3",
+		"vitest": "^0.32.2"
+	},
+	"dependencies": {
+		"@babel/types": "^7.22.5"
+	}
 }
