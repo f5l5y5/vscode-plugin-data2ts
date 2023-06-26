@@ -1,29 +1,28 @@
-import { test, expect } from "vitest";
+import { test, expect } from 'vitest'
 import { getFunctionCode } from '../src/utils'
 
 test.only('getCode', () => {
-
 	const code = `
 	const obj = {
-		name:'jack',
-		age:20,
-		gender:'man'
-	}
+			name: "jack",
+			age: 18,
+			sex: 'man',
+			arr:[1,2,3],
+			obj:{a:1},
+			arrobj:[{c:2}]				
+			}
 
 	const arr = [1,2,3]
 	`
 	const index = 10
-	const variableNode = getFunctionCode(code,index)
-
+	const variableNode = getFunctionCode(code, index)
 
 	expect(variableNode).toEqual({
 		name: 'obj',
 		startPosition: { line: 2, column: 1, index: 2 },
 		endPosition: { line: 6, column: 2, index: 58 }
 	})
-
-
-});
+})
 
 /*
 import { parse } from '@babel/parser';

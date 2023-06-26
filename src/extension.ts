@@ -19,27 +19,21 @@ export function activate(context: vscode.ExtensionContext) {
 			const code = editor.document.getText()
 			const index = editor.document.offsetAt(editor.selection.active)
 
-			let position = getFunctionCode(code, index)
+			let {startPosition,resultType} = getFunctionCode(code, index)
 
-			if (!position) {
+			if (!resultType) {
 				return
 			}
 
 			// 获取range范围内的内容
 			// 将起始位置和结束位置转换为Range对象
-			const startPos = new vscode.Position(position.startPosition.line - 1, position.startPosition.column )
-			const endPos = new vscode.Position(position.endPosition.line, position.endPosition.column)
-			const range = new vscode.Range(startPos, endPos)
+			// const startPos = new vscode.Position(position.startPosition.line - 1, position.startPosition.column )
+			// const endPos = new vscode.Position(position.endPosition.line, position.endPosition.column)
+			// const range = new vscode.Range(startPos, endPos)
 
-			// 从文档对象中提取指定范围的文本
-				const objectText = editor.document.getText(range)
+			// // 从文档对象中提取指定范围的文本
+			// 	const objectText = editor.document.getText(range)
 				
-				let obj = {}
-				const func = new Function(objectText)
-				func()
-				obj = vscode.window['obj'] as Record<string, any>
-
-				console.log('打印***obj',obj)
 
 
 			/** 删除前开始到结束  行列 */
@@ -53,12 +47,11 @@ export function activate(context: vscode.ExtensionContext) {
 			// })
 
 			// find the previous empty line and insert the declaration
-			// const startPos = new vscode.Position(Math.max(editor.selection.start.line - 1, 0), 0)
-			// const newText = code
+			const startPos = new vscode.Position(startPosition - 2, 0)
 
-			// await editor.edit(editBuilder => {
-			// 	editBuilder.insert(startPos, newText)
-			// })
+			await editor.edit(editBuilder => {
+				editBuilder.insert(startPos, resultType)
+			})
 		} catch (error) {
         vscode.window.showErrorMessage(`Error: ${error}`);
       }

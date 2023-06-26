@@ -1,6 +1,6 @@
 {
 	"name": "data2ts",
-	"displayName": "data2ts",
+	"displayName": "type",
 	"description": "a simple tool for data2ts",
 	"publisher": "fuye",
 	"version": "0.0.1",
@@ -24,8 +24,8 @@
 		"keybindings": [
 			{
 				"command": "data2ts.type",
-				"key": "ctrl+alt+space",
-				"mac": "cmd+alt+space"
+				"key": "ctrl+space",
+				"mac": "cmd+space"
 			}
 		]
 	},
