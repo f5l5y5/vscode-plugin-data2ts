@@ -8,7 +8,7 @@ type TCodeRes = {
 };
 
 // 考虑光标所在位置的
-export const getFunctionCode = (code: string, index: number): TCodeRes => {
+export const getFunctionCode = (code: string, index: number): TCodeRes|undefined => {
   let scopePath: any;
   // 1. 第一步解析成ast树，筛选出变量的ast
   const ast = parse(code);
@@ -37,6 +37,8 @@ export const getFunctionCode = (code: string, index: number): TCodeRes => {
       const { start, end } = path.node;
       if (start! >= startPosition && end! <= endPosition) {
         if (t.isVariableDeclaration(path.node)) {
+		  console.log(path.node,'path.node');
+			
           const declaration = path.node.declarations[0];
           if (declaration && t.isIdentifier(declaration.id)) {
             const typeDeclaration = getTypeDeclaration(declaration.init!);
@@ -47,7 +49,7 @@ export const getFunctionCode = (code: string, index: number): TCodeRes => {
     },
   });
 
-  console.log("打印***resultType", resultType);
+//   console.log("打印***resultType", resultType);
   console.log(typesMap);
   
 
@@ -72,7 +74,12 @@ function objectExpressionToString(
   if (t.isObjectExpression(node)) {
     return JSON.stringify(
       node.properties.map(
-        (prop) => `${(prop.key as t.Identifier).name}: ${prop.value}`
+        (prop) =>{
+			if(t.isObjectProperty(prop)){
+				return `${(prop.key as t.Identifier).name}: ${prop.value}`
+			}
+			return ''
+		}
       )
     );
   } else {
@@ -82,7 +89,9 @@ function objectExpressionToString(
 
 // 此函数将基于给定的节点类型和属性生成类型声明
 function getTypeDeclaration(node: t.Node): string {
+	// 判断是否是对象表达式
   if (t.isObjectExpression(node)) {
+	
     const objString = objectExpressionToString(node);
 
     // 检查是否已经存在相同的类型
@@ -122,11 +131,11 @@ function getTypeDeclaration(node: t.Node): string {
       const typeName = `T${typesMap.size}`;
       typesMap.set(objString, {
         name: typeName,
-        value: `Array<${elementType}>`,
+        value: `${elementType}[]`,
       });
       return typeName;
     } else {
-      return `Array<${elementType}>`;
+      return `${elementType}[]`;
     }
   } else if (t.isStringLiteral(node)) {
     return "string";
