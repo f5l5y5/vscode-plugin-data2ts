@@ -3,9 +3,9 @@
 	"displayName": "data2ts",
 	"description": "a simple tool for data2ts",
 	"publisher": "fuye",
-	"version": "0.0.2",
+	"version": "0.0.4",
 	"engines": {
-		"vscode": "^1.79.0"
+		"vscode": "^1.68.0"
 	},
 	"categories": [
 		"Other"
@@ -49,7 +49,7 @@
 		"@types/glob": "^8.0.0",
 		"@types/mocha": "^10.0.1",
 		"@types/node": "16.x",
-		"@types/vscode": "^1.79.0",
+		"@types/vscode": "^1.68.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"@vscode/test-electron": "^2.2.0",

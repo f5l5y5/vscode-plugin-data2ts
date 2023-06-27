@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 			// })
 
 			// find the previous empty line and insert the declaration
-			const startPos = new vscode.Position(startPosition - 2, 0)
+			const startPos = new vscode.Position(startPosition - 1, 0)
 
 			await editor.edit(editBuilder => {
 				editBuilder.insert(startPos, resultType)
