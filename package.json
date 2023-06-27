@@ -1,31 +1,38 @@
 {
 	"name": "data2ts",
-	"displayName": "type",
+	"displayName": "data2ts",
 	"description": "a simple tool for data2ts",
 	"publisher": "fuye",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.79.0"
 	},
 	"categories": [
 		"Other"
 	],
+	"license": "MIT",
+	"repository": {
+	  "type": "git",
+	  "url": "https://github.com/f5l5y5/vscode-plugin-data2ts.git"
+	},
+	"homepage": "https://github.com/f5l5y5/vscode-plugin-data2ts",
+	"bugs": "https://github.com/f5l5y5/vscode-plugin-data2ts/issues",
 	"activationEvents": [
-		"onCommand:data2ts.type"
+		"onCommand:data2ts.data2ts"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "data2ts.type",
+				"command": "data2ts.data2ts",
 				"title": "data2ts"
 			}
 		],
 		"keybindings": [
 			{
-				"command": "data2ts.type",
-				"key": "ctrl+space",
-				"mac": "cmd+space"
+				"command": "data2ts.data2ts",
+				"key": "ctrl+alt+space",
+				"mac": "cmd+alt+space"
 			}
 		]
 	},
@@ -38,10 +45,6 @@
 		"test": "vitest --run"
 	},
 	"devDependencies": {
-		"@babel/generator": "^7.22.5",
-		"@babel/parser": "^7.22.5",
-		"@babel/traverse": "^7.22.5",
-		"@types/babel__generator": "^7.6.4",
 		"@types/babel__traverse": "^7.20.1",
 		"@types/glob": "^8.0.0",
 		"@types/mocha": "^10.0.1",
@@ -57,6 +60,8 @@
 		"vitest": "^0.32.2"
 	},
 	"dependencies": {
-		"@babel/types": "^7.22.5"
+		"@babel/types": "^7.22.5",
+		"@babel/parser": "^7.22.5",
+		"@babel/traverse": "^7.22.5"
 	}
 }

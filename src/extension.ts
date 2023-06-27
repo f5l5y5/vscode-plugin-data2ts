@@ -6,7 +6,7 @@ import { getFunctionCode } from "./utils"
  */
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
-    "data2ts.type",
+    "data2ts.data2ts",
     async () => {
       try {
 			// get active editor and selection 获取当前文件 如果没有打开文件，报错
@@ -19,7 +19,11 @@ export function activate(context: vscode.ExtensionContext) {
 			const code = editor.document.getText()
 			const index = editor.document.offsetAt(editor.selection.active)
 
-			let {startPosition,resultType} = getFunctionCode(code, index)
+			let result = getFunctionCode(code, index)
+			if(!result){
+				return
+			}
+			const {startPosition,resultType} = result
 
 			if (!resultType) {
 				return
