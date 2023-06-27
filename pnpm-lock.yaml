@@ -25,7 +25,7 @@ devDependencies:
     specifier: 16.x
     version: registry.npmmirror.com/@types/node@16.0.0
   '@types/vscode':
-    specifier: ^1.68.0
+    specifier: ^1.72.0
     version: registry.npmmirror.com/@types/vscode@1.79.0
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.45.0

@@ -3,9 +3,9 @@
 	"displayName": "data2ts",
 	"description": "a simple tool for data2ts",
 	"publisher": "fuye",
-	"version": "0.0.4",
+	"version": "0.0.7",
 	"engines": {
-		"vscode": "^1.68.0"
+		"vscode": "^1.74.0"
 	},
 	"categories": [
 		"Other"
@@ -18,19 +18,19 @@
 	"homepage": "https://github.com/f5l5y5/vscode-plugin-data2ts",
 	"bugs": "https://github.com/f5l5y5/vscode-plugin-data2ts/issues",
 	"activationEvents": [
-		"onCommand:data2ts.data2ts"
+		"onCommand:yinuo.data2ts"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "data2ts.data2ts",
+				"command": "yinuo.data2ts",
 				"title": "data2ts"
 			}
 		],
 		"keybindings": [
 			{
-				"command": "data2ts.data2ts",
+				"command": "yinuo.data2ts",
 				"key": "ctrl+alt+space",
 				"mac": "cmd+alt+space"
 			}
@@ -49,7 +49,7 @@
 		"@types/glob": "^8.0.0",
 		"@types/mocha": "^10.0.1",
 		"@types/node": "16.x",
-		"@types/vscode": "^1.68.0",
+		"@types/vscode": "^1.74.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"@vscode/test-electron": "^2.2.0",
